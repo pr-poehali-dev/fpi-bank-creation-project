@@ -2,20 +2,39 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
+import { AuthService } from "@/lib/auth";
+import Auth from "./Auth";
+import Dashboard from "./Dashboard";
 
 function Index() {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser();
+    if (currentUser) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  if (isAuthenticated) {
+    return <Dashboard onLogout={() => {
+      AuthService.logout();
+      setIsAuthenticated(false);
+    }} />;
+  }
+
+  if (showAuth) {
+    return <Auth onAuthSuccess={() => {
+      setIsAuthenticated(true);
+      setShowAuth(false);
+    }} />;
+  }
 
   const handleLogin = () => {
-    toast({
-      title: "Вход в систему",
-      description: "Перенаправляем в личный кабинет...",
-    });
-    setTimeout(() => {
-      window.location.href = '/dashboard';
-    }, 1500);
+    setShowAuth(true);
   };
 
   const handleDownloadApp = () => {
@@ -23,7 +42,6 @@ function Index() {
       title: "Скачивание приложения",
       description: "Начинается загрузка ФПИ-Банк Мобайл...",
     });
-    // Имитация скачивания
     setTimeout(() => {
       const link = document.createElement('a');
       link.href = 'data:text/plain;charset=utf-8,ФПИ-Банк Мобайл - Приложение для управления финансами';
@@ -33,46 +51,29 @@ function Index() {
   };
 
   const handleOpenAccount = () => {
-    toast({
-      title: "Открытие счёта",
-      description: "Переходим к оформлению нового счёта...",
-    });
+    setShowAuth(true);
   };
 
   const handleApplyCard = () => {
-    toast({
-      title: "Заявка на карту",
-      description: "Оформляем заявку на банковскую карту...",
-    });
+    setShowAuth(true);
   };
 
   const handleApplyCredit = () => {
-    toast({
-      title: "Заявка на кредит",
-      description: "Проверяем кредитную историю и одобряем заявку...",
-    });
+    setShowAuth(true);
   };
 
   const handleOpenDeposit = () => {
-    toast({
-      title: "Открытие депозита",
-      description: "Открываем депозитный счёт с выгодными условиями...",
-    });
+    setShowAuth(true);
   };
 
   const handleOpenWallet = () => {
-    toast({
-      title: "Криптокошелёк",
-      description: "Создаём безопасный криптокошелёк...",
-    });
+    setShowAuth(true);
   };
 
   const handleCryptoTrade = (crypto: string) => {
-    toast({
-      title: `Торговля ${crypto}`,
-      description: `Открываем торговый терминал для ${crypto}...`,
-    });
+    setShowAuth(true);
   };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
