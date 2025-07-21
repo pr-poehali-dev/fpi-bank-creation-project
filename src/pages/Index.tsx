@@ -2,8 +2,77 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 function Index() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const handleLogin = () => {
+    toast({
+      title: "Вход в систему",
+      description: "Перенаправляем в личный кабинет...",
+    });
+    setTimeout(() => {
+      window.location.href = '/dashboard';
+    }, 1500);
+  };
+
+  const handleDownloadApp = () => {
+    toast({
+      title: "Скачивание приложения",
+      description: "Начинается загрузка ФПИ-Банк Мобайл...",
+    });
+    // Имитация скачивания
+    setTimeout(() => {
+      const link = document.createElement('a');
+      link.href = 'data:text/plain;charset=utf-8,ФПИ-Банк Мобайл - Приложение для управления финансами';
+      link.download = 'fpi-bank-mobile.txt';
+      link.click();
+    }, 1000);
+  };
+
+  const handleOpenAccount = () => {
+    toast({
+      title: "Открытие счёта",
+      description: "Переходим к оформлению нового счёта...",
+    });
+  };
+
+  const handleApplyCard = () => {
+    toast({
+      title: "Заявка на карту",
+      description: "Оформляем заявку на банковскую карту...",
+    });
+  };
+
+  const handleApplyCredit = () => {
+    toast({
+      title: "Заявка на кредит",
+      description: "Проверяем кредитную историю и одобряем заявку...",
+    });
+  };
+
+  const handleOpenDeposit = () => {
+    toast({
+      title: "Открытие депозита",
+      description: "Открываем депозитный счёт с выгодными условиями...",
+    });
+  };
+
+  const handleOpenWallet = () => {
+    toast({
+      title: "Криптокошелёк",
+      description: "Создаём безопасный криптокошелёк...",
+    });
+  };
+
+  const handleCryptoTrade = (crypto: string) => {
+    toast({
+      title: `Торговля ${crypto}`,
+      description: `Открываем торговый терминал для ${crypto}...`,
+    });
+  };
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -11,7 +80,7 @@ function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-[#0052CC] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#8B5CF6] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">ФПИ</span>
               </div>
               <span className="text-xl font-bold text-[#1E293B]">ФПИ-Банк</span>
@@ -27,7 +96,7 @@ function Index() {
               </a>
               <a href="#" className="text-gray-600 hover:text-[#0052CC] transition-colors">Бизнес</a>
             </nav>
-            <Button className="bg-[#0052CC] hover:bg-[#0052CC]/90">
+            <Button onClick={handleLogin} className="bg-[#8B5CF6] hover:bg-[#8B5CF6]/90">
               Войти в банк
             </Button>
           </div>
@@ -53,11 +122,11 @@ function Index() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-white text-[#0052CC] hover:bg-gray-100">
+                <Button onClick={handleDownloadApp} size="lg" className="bg-white text-[#0052CC] hover:bg-gray-100">
                   <Icon name="Smartphone" className="mr-2" size={20} />
                   Скачать приложение
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button onClick={handleOpenAccount} size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   Открыть счёт
                 </Button>
               </div>
@@ -146,7 +215,7 @@ function Index() {
                     <span className="text-sm">Мгновенная выпуск</span>
                   </li>
                 </ul>
-                <Button className="w-full bg-[#0052CC] hover:bg-[#0052CC]/90">
+                <Button onClick={handleApplyCard} className="w-full bg-[#0052CC] hover:bg-[#0052CC]/90">
                   Оформить карту
                 </Button>
               </CardContent>
@@ -174,7 +243,7 @@ function Index() {
                     <span className="text-sm">Онлайн-одобрение</span>
                   </li>
                 </ul>
-                <Button className="w-full bg-[#10B981] hover:bg-[#10B981]/90">
+                <Button onClick={handleApplyCredit} className="w-full bg-[#10B981] hover:bg-[#10B981]/90">
                   Подать заявку
                 </Button>
               </CardContent>
@@ -202,7 +271,7 @@ function Index() {
                     <span className="text-sm">Пополнение и снятие</span>
                   </li>
                 </ul>
-                <Button className="w-full bg-[#EF4444] hover:bg-[#EF4444]/90">
+                <Button onClick={handleOpenDeposit} className="w-full bg-[#EF4444] hover:bg-[#EF4444]/90">
                   Открыть депозит
                 </Button>
               </CardContent>
@@ -250,7 +319,7 @@ function Index() {
                       </div>
                     </div>
                   </div>
-                  <Button size="sm" className="w-full bg-white/20 hover:bg-white/30 border-white/30">
+                  <Button onClick={() => handleCryptoTrade(crypto.name)} size="sm" className="w-full bg-white/20 hover:bg-white/30 border-white/30">
                     Торговать
                   </Button>
                 </CardContent>
@@ -277,7 +346,7 @@ function Index() {
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black">
+                <Button onClick={handleOpenWallet} size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black">
                   <Icon name="Wallet" className="mr-2" size={20} />
                   Открыть кошелёк
                 </Button>
@@ -341,7 +410,7 @@ function Index() {
                   </div>
                 ))}
               </div>
-              <Button size="lg" className="bg-[#10B981] hover:bg-[#10B981]/90">
+              <Button onClick={handleDownloadApp} size="lg" className="bg-[#10B981] hover:bg-[#10B981]/90">
                 <Icon name="Download" className="mr-2" size={20} />
                 Скачать приложение
               </Button>
@@ -401,7 +470,7 @@ function Index() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-[#0052CC] rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#8B5CF6] rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">ФПИ</span>
                 </div>
                 <span className="text-xl font-bold">ФПИ-Банк</span>
