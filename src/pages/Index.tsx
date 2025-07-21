@@ -21,6 +21,10 @@ function Index() {
               <a href="#" className="text-gray-600 hover:text-[#0052CC] transition-colors">Кредиты</a>
               <a href="#" className="text-gray-600 hover:text-[#0052CC] transition-colors">Депозиты</a>
               <a href="#" className="text-gray-600 hover:text-[#0052CC] transition-colors">Инвестиции</a>
+              <a href="#" className="text-gray-600 hover:text-[#8B5CF6] transition-colors flex items-center">
+                <Icon name="Bitcoin" size={16} className="mr-1" fallback="Coins" />
+                Криптовалюты
+              </a>
               <a href="#" className="text-gray-600 hover:text-[#0052CC] transition-colors">Бизнес</a>
             </nav>
             <Button className="bg-[#0052CC] hover:bg-[#0052CC]/90">
@@ -94,13 +98,13 @@ function Index() {
               { icon: "Banknote", title: "Переводы", desc: "Быстро и безопасно" },
               { icon: "PiggyBank", title: "Депозиты", desc: "До 8% годовых" },
               { icon: "TrendingUp", title: "Инвестиции", desc: "Готовые портфели" },
-              { icon: "Home", title: "Ипотека", desc: "От 5.9% годовых" },
+              { icon: "Bitcoin", title: "Криптовалюты", desc: "Bitcoin, Ethereum", fallback: "Coins" },
               { icon: "Building", title: "Бизнес", desc: "Решения для МСБ" }
             ].map((item, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1">
                 <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-[#0052CC]/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <Icon name={item.icon} className="text-[#0052CC]" size={24} />
+                  <div className={`w-12 h-12 ${item.title === 'Криптовалюты' ? 'bg-[#8B5CF6]/10' : 'bg-[#0052CC]/10'} rounded-lg flex items-center justify-center mx-auto mb-4`}>
+                    <Icon name={item.icon} className={item.title === 'Криптовалюты' ? 'text-[#8B5CF6]' : 'text-[#0052CC]'} size={24} fallback={item.fallback} />
                   </div>
                   <h3 className="font-semibold text-[#1E293B] mb-1">{item.title}</h3>
                   <p className="text-sm text-gray-600">{item.desc}</p>
@@ -203,6 +207,111 @@ function Index() {
                 </Button>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Crypto Section */}
+      <section className="py-16 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="bg-white/20 text-white border-white/30 mb-4">
+              Криптовалюты
+            </Badge>
+            <h2 className="text-4xl font-bold mb-6">Торговля цифровыми активами</h2>
+            <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+              ФПИ-Банк поддерживает операции с криптовалютами. Покупайте, продавайте и храните Bitcoin, Ethereum и другие популярные монеты.
+            </p>
+          </div>
+
+          {/* Crypto Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {[
+              { symbol: "BTC", name: "Bitcoin", price: "2,485,321 ₽", change: "+5.2%", color: "bg-orange-500" },
+              { symbol: "ETH", name: "Ethereum", price: "186,432 ₽", change: "+3.1%", color: "bg-blue-500" },
+              { symbol: "USDT", name: "Tether", price: "91.35 ₽", change: "-0.1%", color: "bg-green-500" }
+            ].map((crypto, index) => (
+              <Card key={index} className="bg-white/10 backdrop-blur-lg border-white/20 text-white hover:bg-white/15 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-10 h-10 ${crypto.color} rounded-full flex items-center justify-center`}>
+                        <span className="font-bold text-sm">{crypto.symbol}</span>
+                      </div>
+                      <div>
+                        <h3 className="font-bold">{crypto.name}</h3>
+                        <p className="text-purple-200 text-sm">{crypto.symbol}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-lg">{crypto.price}</div>
+                      <div className={`text-sm ${crypto.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
+                        {crypto.change}
+                      </div>
+                    </div>
+                  </div>
+                  <Button size="sm" className="w-full bg-white/20 hover:bg-white/30 border-white/30">
+                    Торговать
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Crypto Features */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold mb-6">Криптокошелёк ФПИ-Банк</h3>
+              <div className="space-y-4 mb-8">
+                {[
+                  "Безопасное хранение криптовалют",
+                  "Мгновенная покупка и продажа",
+                  "Низкие комиссии за операции",
+                  "Поддержка 50+ криптовалют",
+                  "P2P переводы между пользователями"
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-center">
+                    <Icon name="Shield" className="text-yellow-400 mr-3" size={20} />
+                    <span className="text-lg">{feature}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black">
+                  <Icon name="Wallet" className="mr-2" size={20} />
+                  Открыть кошелёк
+                </Button>
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  Узнать больше
+                </Button>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="Bitcoin" size={32} className="text-white" fallback="Coins" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Портфель</h3>
+                    <p className="text-purple-200">Общая стоимость активов</p>
+                    <div className="text-3xl font-bold mt-2">478,932 ₽</div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { name: "BTC", amount: "0.15", value: "372,798 ₽" },
+                      { name: "ETH", amount: "0.57", value: "106,286 ₽" }
+                    ].map((holding, index) => (
+                      <div key={index} className="bg-white/5 rounded-lg p-4">
+                        <div className="font-semibold">{holding.name}</div>
+                        <div className="text-sm text-purple-200">{holding.amount}</div>
+                        <div className="text-sm font-bold mt-1">{holding.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
